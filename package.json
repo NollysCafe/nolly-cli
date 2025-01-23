@@ -19,6 +19,7 @@
 		"figlet": "^1.8.0",
 		"gradient-string": "^3.0.0",
 		"inquirer": "^12.3.2",
+		"node-fetch": "^3.3.2",
 		"update-notifier": "^7.3.1"
 	},
 	"devDependencies": {
@@ -27,6 +28,7 @@
 		"@types/inquirer": "^9.0.7",
 		"@types/jest": "^29.5.14",
 		"@types/node": "^22.10.8",
+		"@types/node-fetch": "^2.6.12",
 		"@types/update-notifier": "^6.0.8",
 		"jest": "^29.7.0",
 		"ts-jest": "^29.2.5",

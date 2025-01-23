@@ -10,65 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install Node.js dependencies
-        run: npm install node-fetch
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Check for inappropriate content
-        uses: actions/github-script@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run moderation script
+        run: node .github/scripts/moderate-content.js
         env:
           PERSPECTIVE_API_KEY: ${{ secrets.PERSPECTIVE_API_KEY }}
-        with:
-          script: |
-            const nfetch = require('node-fetch');
-
-            const inappropriateWords = ['spam', 'harassment', 'abuse'];
-
-            // Validate the payload structure
-            if (!context.payload.discussion) {
-              core.setFailed('Discussion data is not available in the event payload.');
-              return;
-            }
-
-            const content = context.payload.discussion.body;
-            if (!content) {
-              core.setFailed('Discussion body is empty or not available.');
-              return;
-            }
-
-            // Check against predefined word list
-            if (inappropriateWords.some(word => content.toLowerCase().includes(word))) {
-              core.setFailed('Inappropriate content detected based on word list. Please edit your discussion.');
-              return;
-            }
-
-            // Use Perspective API to check for toxicity
-            try {
-              const response = await nfetch(
-                `https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=${process.env.PERSPECTIVE_API_KEY}`,
-                {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    comment: { text: content },
-                    languages: ['en'],
-                    requestedAttributes: { TOXICITY: {} }
-                  }),
-                }
-              );
-
-              if (!response.ok) {
-                core.setFailed(`Failed to call Perspective API: ${response.statusText}`);
-                return;
-              }
-
-              const responseData = await response.json();
-              const toxicityScore = responseData.attributeScores.TOXICITY.summaryScore.value;
-
-              if (toxicityScore >= 0.8) {
-                core.setFailed('Inappropriate content detected based on toxicity score. Please edit your discussion.');
-              } else {
-                console.log('✅ Content passed moderation.');
-              }
-            } catch (error) {
-              core.setFailed(`Error during moderation check: ${error.message}`);
-            }
+          PAYLOAD: '${{ toJson(github.event) }}'
