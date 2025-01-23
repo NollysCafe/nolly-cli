@@ -19,7 +19,6 @@ jobs:
           PERSPECTIVE_API_KEY: ${{ secrets.PERSPECTIVE_API_KEY }}
         with:
           script: |
-            const core = require('@actions/core');
             const fetch = require('node-fetch');
 
             const inappropriateWords = ['spam', 'harassment', 'abuse'];
