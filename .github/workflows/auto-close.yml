@@ -1,0 +1,31 @@
+name: Auto-Close Resolved Discussions
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Every Sunday
+
+jobs:
+  close-resolved:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Close resolved discussions
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { data: discussions } = await github.rest.discussions.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            discussions.forEach(async (discussion) => {
+              if (discussion.state === 'closed') return;
+              if (discussion.answer_html_url) {
+                await github.rest.discussions.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  discussion_number: discussion.number,
+                  state: 'closed',
+                });
+              }
+            });

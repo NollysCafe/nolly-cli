@@ -1,0 +1,25 @@
+name: Welcome New Contributor
+
+on:
+  discussion:
+    types: [created]
+
+jobs:
+  welcome:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Greet new contributors
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const discussion = context.payload.discussion;
+            const isFirstDiscussion = discussion.author_association === 'FIRST_TIMER';
+            if (isFirstDiscussion) {
+              await github.rest.issues.createComment({
+                issue_number: discussion.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `Welcome @${discussion.user.login} to the Create Nolly CLI community! 🎉 Feel free to ask questions, share ideas, or engage with the community. We're glad to have you here! 🚀`,
+              });
+            }

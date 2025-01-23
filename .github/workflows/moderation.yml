@@ -1,0 +1,20 @@
+name: Moderation
+
+on:
+  discussion:
+    types: [created, edited]
+
+jobs:
+  check-content:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check for inappropriate content
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const inappropriateWords = ['abuse', 'spam', 'harassment'];
+            const content = context.payload.discussion.body.toLowerCase();
+            if (inappropriateWords.some(word => content.includes(word))) {
+              core.setFailed('Inappropriate content detected. Please edit your discussion.');
+            }
