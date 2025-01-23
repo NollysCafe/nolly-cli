@@ -13,19 +13,39 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Fetch resolved discussions
+      - name: Close resolved discussions
         uses: actions/github-script@v6
         with:
           script: |
-            const { data: discussions } = await github.rest.discussions.listForRepo({
+            const query = `
+              query ($owner: String!, $repo: String!) {
+                repository(owner: $owner, name: $repo) {
+                  discussions(first: 100, states: OPEN) {
+                    nodes {
+                      id
+                      number
+                      title
+                      answer {
+                        id
+                      }
+                    }
+                  }
+                }
+              }
+            `;
+
+            const variables = {
               owner: context.repo.owner,
               repo: context.repo.repo,
-            });
+            };
 
+            const response = await github.graphql(query, variables);
+            const discussions = response.repository.discussions.nodes;
             let closedCount = 0;
+
             for (const discussion of discussions) {
-              if (discussion.state === 'open' && discussion.answer_html_url) {
-                await github.rest.discussions.update({
+              if (discussion.answer) {
+                await github.rest.teams.updateDiscussion({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   discussion_number: discussion.number,
