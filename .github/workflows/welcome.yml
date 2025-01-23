@@ -1,6 +1,7 @@
 name: Welcome New Contributors
 
 on:
+  workflow_dispatch:
   discussion:
     types: [created]
 

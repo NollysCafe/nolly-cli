@@ -1,6 +1,7 @@
 name: Moderation
 
 on:
+  workflow_dispatch:
   discussion:
     types: [created, edited]
 
