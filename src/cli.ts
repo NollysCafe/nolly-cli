@@ -6,7 +6,7 @@ import { handleListCommand } from './commands/list.js'
 import { handleClearCacheCommand } from './commands/clearCache.js'
 import chalk from 'chalk'
 
-const version = '0.1.0'
+const version = '1.0.0'
 
 export const runCLI = async (args: string[]): Promise<void> => {
 	// Check for updates

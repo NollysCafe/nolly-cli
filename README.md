@@ -38,7 +38,7 @@ npm install -g create-nolly
 Create a new project with one command:
 
 ```bash
-create-nolly <project-name>
+create-nolly new
 ```
 
 Follow the interactive prompts to:
