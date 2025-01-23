@@ -16,8 +16,6 @@ jobs:
           PERSPECTIVE_API_KEY: ${{ secrets.PERSPECTIVE_API_KEY || '' }}
         with:
           script: |
-            const axios = require('axios');
-
             const inappropriateWords = ['spam', 'harassment', 'abuse'];
             const content = context.payload.discussion.body || '';
 
@@ -28,16 +26,26 @@ jobs:
             }
 
             // Use Perspective API to check for toxicity
-            const response = await axios.post(
-              'https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=' + process.env.PERSPECTIVE_API_KEY,
+            const response = await fetch(
+              `https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=${process.env.PERSPECTIVE_API_KEY}`,
               {
-                comment: { text: content },
-                languages: ['en'],
-                requestedAttributes: { TOXICITY: {} }
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  comment: { text: content },
+                  languages: ['en'],
+                  requestedAttributes: { TOXICITY: {} }
+                }),
               }
             );
 
-            const toxicityScore = response.data.attributeScores.TOXICITY.summaryScore.value;
+            if (!response.ok) {
+              core.setFailed(`Failed to call Perspective API: ${response.statusText}`);
+              return;
+            }
+
+            const responseData = await response.json();
+            const toxicityScore = responseData.attributeScores.TOXICITY.summaryScore.value;
 
             if (toxicityScore >= 0.8) {
               core.setFailed('Inappropriate content detected based on toxicity score. Please edit your discussion.');
