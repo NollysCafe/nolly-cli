@@ -2,7 +2,7 @@
 	"name": "create-nolly",
 	"version": "0.1.0",
 	"description": "A simple CLI tool for bootstrapping projects",
-	"main": "dist/index.js",
+	"main": "dist/bin/index.js",
 	"type": "module",
 	"bin": {
 		"create-nolly": "./dist/bin/index.js"
