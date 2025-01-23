@@ -13,6 +13,7 @@ ${chalk.bold('Options:')}
   ${chalk.green('--version, -v')} Show the CLI version
   ${chalk.green('new')}           Create a new project
   ${chalk.green('list')}          List all available templates
+  ${chalk.green('clear-cache')}   Clear the cli cache
 
 ${chalk.bold('Links:')}
   ${chalk.blueBright('GitHub:')}    ${chalk.underline('https://github.com/thenolle')}

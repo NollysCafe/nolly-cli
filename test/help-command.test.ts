@@ -5,7 +5,6 @@ describe('Help Command Validation', () => {
 		console.log('🚀 Starting test for --help command...')
 		const output = execSync('node dist/bin/index.js --help', { stdio: 'pipe' }).toString()
 		console.log('\n✅ CLI Output (--help Command):\n', output)
-		// Check for critical elements
 		expect(output).toContain('--help')
 		expect(output).toContain('-h')
 		expect(output).toContain('--version')
@@ -19,7 +18,6 @@ describe('Help Command Validation', () => {
 		console.log('🚀 Starting test for -h command...')
 		const output = execSync('node dist/bin/index.js -h', { stdio: 'pipe' }).toString()
 		console.log('\n✅ CLI Output (-h Command):\n', output)
-		// Check for critical elements
 		expect(output).toContain('--help')
 		expect(output).toContain('-h')
 		expect(output).toContain('--version')

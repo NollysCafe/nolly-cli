@@ -10,19 +10,19 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const CACHE_KEY = 'templates'
-const validTemplates = readCache(CACHE_KEY, Infinity) as string[] || ['frontend', 'backend', 'fullstack']
+const validTemplates = readCache(CACHE_KEY, Infinity) as { name: string }[] || [{ name: 'frontend' }, { name: 'backend' }, { name: 'fullstack' }]
 
 export const handleNewCommand = async (args: string[]): Promise<void> => {
 	try {
 		// Parse project name and template type
 		const typeArgIndex = args.findIndex(arg => arg === '--type')
-		let projectName = args.find(arg => arg !== '--type' && !validTemplates.includes(arg) && !arg.startsWith('--'))
+		let projectName = args.find(arg => arg !== '--type' && !arg.startsWith('--'))
 		let templateType = typeArgIndex >= 0 ? args[typeArgIndex + 1] : null
 
 		// Validate the provided templateType immediately
-		if (templateType && !validTemplates.includes(templateType)) {
+		if (templateType && !validTemplates.some(template => template.name === templateType)) {
 			console.error(chalk.red(`❌ Error: Invalid template type "${templateType}".`))
-			console.log(chalk.cyan('Valid types: frontend, backend, fullstack'))
+			console.log(chalk.cyan(`Valid types: ${validTemplates.map(template => template.name).join(', ')}`))
 			return // Prevent further execution
 		}
 
@@ -43,7 +43,10 @@ export const handleNewCommand = async (args: string[]): Promise<void> => {
 				type: 'list',
 				name: 'template',
 				message: 'Choose a project template:',
-				choices: validTemplates.map(type => ({ name: type, value: type })),
+				choices: validTemplates.map(template => ({
+					name: `${template.name}`,
+					value: template.name,
+				}))
 			})
 			templateType = template
 		}

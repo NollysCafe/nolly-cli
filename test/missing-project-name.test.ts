@@ -1,4 +1,16 @@
+import fs from 'fs'
 import { execSync } from 'child_process'
+
+const removeProject = (projectName: string) => {
+	if (fs.existsSync(projectName)) {
+		fs.rmSync(projectName, { recursive: true, force: true })
+	}
+}
+
+afterEach(() => {
+	console.log(`🧹 Cleaning up project folder "frontend"`)
+	removeProject('frontend')
+})
 
 test('Fails when no project name is provided', () => {
 	console.log('🚀 Starting test for missing project name...')

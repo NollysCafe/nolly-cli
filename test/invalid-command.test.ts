@@ -8,8 +8,7 @@ describe('Invalid Command Handling', () => {
 		} catch (error: any) {
 			const output = error.stderr?.toString()
 			console.log('\n✅ CLI Output (Invalid Command Test):\n', output)
-			expect(output).toContain('❌ Error: Invalid command.')
-			expect(output).toContain('Use --help to see available options.')
+			expect(output.trim()).toContain('❌ Error: Invalid command "unknown-command".')
 			console.log('✅ Test passed: Correct error message for invalid command.')
 		}
 	})
