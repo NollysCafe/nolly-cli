@@ -2,14 +2,17 @@ name: Auto-Close Resolved Discussions
 
 on:
   schedule:
-    - cron: '0 0 * * 0' # Every Sunday
+    - cron: '0 0 * * 0' # Runs every Sunday
 
 jobs:
   close-resolved:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Close resolved discussions
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fetch resolved discussions
         uses: actions/github-script@v6
         with:
           script: |
@@ -18,14 +21,17 @@ jobs:
               repo: context.repo.repo,
             });
 
-            discussions.forEach(async (discussion) => {
-              if (discussion.state === 'closed') return;
-              if (discussion.answer_html_url) {
+            let closedCount = 0;
+            for (const discussion of discussions) {
+              if (discussion.state === 'open' && discussion.answer_html_url) {
                 await github.rest.discussions.update({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   discussion_number: discussion.number,
                   state: 'closed',
                 });
+                closedCount++;
               }
-            });
+            }
+
+            console.log(`✅ Closed ${closedCount} resolved discussions.`);

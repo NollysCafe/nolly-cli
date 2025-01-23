@@ -1,4 +1,4 @@
-name: Welcome New Contributor
+name: Welcome New Contributors
 
 on:
   discussion:
@@ -9,17 +9,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Greet new contributors
+      - name: Welcome first-time contributors
         uses: actions/github-script@v6
         with:
           script: |
             const discussion = context.payload.discussion;
             const isFirstDiscussion = discussion.author_association === 'FIRST_TIMER';
+
             if (isFirstDiscussion) {
+              const welcomeMessage = `
+                👋 Welcome @${discussion.user.login} to the **Create Nolly CLI Community**! 🎉
+
+                We're excited to have you here. Here are some ways to get started:
+                - 💬 Ask questions or share ideas in the [Q&A](https://github.com/thenolle/create-nolly/discussions/categories/questions-answers).
+                - 🚀 Share your suggestions in the [Ideas](https://github.com/thenolle/create-nolly/discussions/categories/ideas-proposals).
+                - 🌟 Don't forget to star the repo if you find it useful!
+
+                If you need any help, feel free to ask. Happy hacking! 🚀
+              `;
               await github.rest.issues.createComment({
                 issue_number: discussion.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: `Welcome @${discussion.user.login} to the Create Nolly CLI community! 🎉 Feel free to ask questions, share ideas, or engage with the community. We're glad to have you here! 🚀`,
+                body: welcomeMessage,
               });
             }
