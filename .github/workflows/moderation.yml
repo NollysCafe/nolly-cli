@@ -17,7 +17,14 @@ jobs:
         with:
           script: |
             const inappropriateWords = ['spam', 'harassment', 'abuse'];
-            const content = context.payload.discussion.body || '';
+
+            // Validate the payload structure
+            if (!context.payload.discussion || !context.payload.discussion.body) {
+              core.setFailed('Discussion body is not available in the event payload.');
+              return;
+            }
+
+            const content = context.payload.discussion.body;
 
             // Check against predefined word list
             if (inappropriateWords.some(word => content.toLowerCase().includes(word))) {
