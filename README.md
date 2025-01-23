@@ -111,7 +111,7 @@ Ensure your environment meets these requirements:
 
 Need help or have feedback?
 - Open an [issue](https://github.com/thenolle/create-nolly/issues).
-- Join our [Discord community](https://discord.gg/thenolle).
+- Join our [Discord community](https://discord.gg/T9eaXaVun6).
 
 ---
 
