@@ -1,1 +1,0 @@
-{"version":3,"file":"clearCache.js","sourceRoot":"","sources":["../../../src/commands/clearCache.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,UAAU,EAAE,MAAM,mBAAmB,CAAA;AAC9C,OAAO,KAAK,MAAM,OAAO,CAAA;AAEzB,MAAM,CAAC,MAAM,uBAAuB,GAAG,GAAS,EAAE;IACjD,UAAU,EAAE,CAAA;IACZ,OAAO,CAAC,GAAG,CAAC,KAAK,CAAC,KAAK,CAAC,+BAA+B,CAAC,CAAC,CAAA;AAC1D,CAAC,CAAA"}
