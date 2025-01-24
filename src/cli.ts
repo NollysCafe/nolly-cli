@@ -3,7 +3,6 @@ import { handleHelpCommand } from './commands/help.js'
 import { branding } from './utils/branding.js'
 import { handleNewCommand } from './commands/new.js'
 import { handleListCommand } from './commands/list.js'
-import { handleClearCacheCommand } from './commands/clearCache.js'
 import { handleUpdateCommand } from './commands/update.js'
 
 import chalk from 'chalk'
@@ -53,10 +52,6 @@ export const runCLI = async (args: string[]): Promise<void> => {
 
 		case 'list':
 			handleListCommand()
-			break
-
-		case 'clear-cache':
-			handleClearCacheCommand()
 			break
 
 		case 'update':

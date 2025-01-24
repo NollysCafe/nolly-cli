@@ -3,7 +3,6 @@ import path from 'path'
 import chalk from 'chalk'
 import inquirer from 'inquirer'
 import { fileURLToPath } from 'url'
-import { readCache } from '../utils/cache.js'
 import { execSync } from 'child_process'
 import { platform } from 'os'
 
@@ -11,9 +10,7 @@ import { platform } from 'os'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const CACHE_KEY = 'templates'
-const validTemplates = readCache(CACHE_KEY, Infinity) as { name: string }[] || [{ name: 'frontend' }, { name: 'backend' }, { name: 'fullstack' }]
-
+const validTemplates = [{ name: 'frontend' }, { name: 'backend' }, { name: 'fullstack' }]
 const validPackageManagers = ['npm', 'yarn', 'pnpm']
 
 const isCommandAvailable = (command: string): boolean => {
@@ -31,7 +28,7 @@ const suggestInstallation = async (toolName: string, installCommand: string): Pr
 		type: 'confirm',
 		name: 'install',
 		message: `Would you like to install ${toolName} now?`,
-		default: true,
+		default: true
 	})
 
 	if (install) {
@@ -53,7 +50,11 @@ export const handleNewCommand = async (args: string[]): Promise<void> => {
 	try {
 		// Check for required tools
 		if (!isCommandAvailable('git')) {
-			const installCommand = platform() === 'win32' ? 'choco install git' : platform() === 'darwin' ? 'brew install git' : 'sudo apt install git'
+			const installCommand = platform() === 'win32'
+				? 'choco install git'
+				: platform() === 'darwin'
+					? 'brew install git'
+					: 'sudo apt install git'
 			await suggestInstallation('Git', installCommand)
 		}
 
@@ -72,7 +73,7 @@ export const handleNewCommand = async (args: string[]): Promise<void> => {
 				type: 'input',
 				name: 'name',
 				message: 'What is your project name?',
-				validate: input => input.trim() !== '' || 'Project name cannot be empty.',
+				validate: input => input.trim() !== '' || 'Project name cannot be empty.'
 			})
 			projectName = name
 		}
@@ -90,7 +91,7 @@ export const handleNewCommand = async (args: string[]): Promise<void> => {
 				message: 'Choose a project template:',
 				choices: validTemplates.map(template => ({
 					name: template.name,
-					value: template.name,
+					value: template.name
 				}))
 			})
 			templateType = template
@@ -109,7 +110,7 @@ export const handleNewCommand = async (args: string[]): Promise<void> => {
 				message: 'Choose a package manager:',
 				choices: validPackageManagers.map(manager => ({
 					name: manager,
-					value: manager,
+					value: manager
 				}))
 			})
 			packageManager = manager
@@ -119,7 +120,12 @@ export const handleNewCommand = async (args: string[]): Promise<void> => {
 			console.log(chalk.cyan(`Valid managers: ${validPackageManagers.join(', ')}`))
 			return
 		} else if (!isCommandAvailable(packageManager as string)) {
-			const installCommand = packageManager === 'npm' ? 'npm install -g npm' : packageManager === 'yarn' ? 'npm install -g yarn' : 'npm install -g pnpm'
+			const installCommand =
+				packageManager === 'npm'
+					? 'npm install -g npm'
+					: packageManager === 'yarn'
+						? 'npm install -g yarn'
+						: 'npm install -g pnpm'
 			await suggestInstallation(packageManager as string, installCommand)
 		}
 
@@ -163,7 +169,7 @@ export const handleNewCommand = async (args: string[]): Promise<void> => {
 				type: 'confirm',
 				name: 'installDependencies',
 				message: 'Would you like to install dependencies now?',
-				default: true,
+				default: true
 			})
 			if (installDependencies) {
 				process.chdir(targetDir)
@@ -183,7 +189,7 @@ export const handleNewCommand = async (args: string[]): Promise<void> => {
 				type: 'confirm',
 				name: 'initializeGit',
 				message: 'Would you like to initialize a Git repository?',
-				default: true,
+				default: true
 			})
 			if (initializeGit) {
 				process.chdir(targetDir)

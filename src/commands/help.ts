@@ -14,7 +14,6 @@ ${chalk.bold('Options:')}
   ${chalk.green('--version, -v')}      Show the CLI version
   ${chalk.green('new')}                Create a new project (supports flags: ${chalk.cyan('--type, --package-manager, --no-git, --no-install')})
   ${chalk.green('list')}               List all available templates
-  ${chalk.green('clear-cache')}        Clear the CLI cache
   ${chalk.green('update')}             Update the CLI to the latest version
 
 ${chalk.bold('Links:')}
