@@ -5,15 +5,54 @@ import inquirer from 'inquirer';
 import { fileURLToPath } from 'url';
 import { readCache } from '../utils/cache.js';
 import { execSync } from 'child_process';
+import { platform } from 'os';
 // Fix __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const CACHE_KEY = 'templates';
 const validTemplates = readCache(CACHE_KEY, Infinity) || [{ name: 'frontend' }, { name: 'backend' }, { name: 'fullstack' }];
 const validPackageManagers = ['npm', 'yarn', 'pnpm'];
+const isCommandAvailable = (command) => {
+    try {
+        execSync(`${command} --version`, { stdio: 'ignore' });
+        return true;
+    }
+    catch {
+        return false;
+    }
+};
+const suggestInstallation = async (toolName, installCommand) => {
+    console.log(chalk.yellow(`⚠️  ${toolName} is not installed on your system.`));
+    const { install } = await inquirer.prompt({
+        type: 'confirm',
+        name: 'install',
+        message: `Would you like to install ${toolName} now?`,
+        default: true,
+    });
+    if (install) {
+        console.log(chalk.cyan(`🔧 Installing ${toolName}...`));
+        try {
+            execSync(installCommand, { stdio: 'inherit' });
+            console.log(chalk.green(`✅ ${toolName} installed successfully.`));
+        }
+        catch (error) {
+            console.error(chalk.red(`❌ Failed to install ${toolName}. Please install it manually.`));
+            process.exit(1);
+        }
+    }
+    else {
+        console.log(chalk.red(`❌ ${toolName} is required to proceed. Exiting...`));
+        process.exit(1);
+    }
+};
 export const handleNewCommand = async (args) => {
     try {
-        // Parse project name and template type
+        // Check for required tools
+        if (!isCommandAvailable('git')) {
+            const installCommand = platform() === 'win32' ? 'choco install git' : platform() === 'darwin' ? 'brew install git' : 'sudo apt install git';
+            await suggestInstallation('Git', installCommand);
+        }
+        // Parse command line arguments
         let projectName = args[0];
         const typeArgIndex = args.findIndex(arg => arg === '--type');
         let templateType = typeArgIndex >= 0 ? args[typeArgIndex + 1] : null;
@@ -67,10 +106,14 @@ export const handleNewCommand = async (args) => {
             });
             packageManager = manager;
         }
-        if (!validPackageManagers.includes(packageManager || '')) {
+        if (!validPackageManagers.includes(packageManager)) {
             console.error(chalk.red(`❌ Error: Invalid package manager "${packageManager}".`));
             console.log(chalk.cyan(`Valid managers: ${validPackageManagers.join(', ')}`));
             return;
+        }
+        else if (!isCommandAvailable(packageManager)) {
+            const installCommand = packageManager === 'npm' ? 'npm install -g npm' : packageManager === 'yarn' ? 'npm install -g yarn' : 'npm install -g pnpm';
+            await suggestInstallation(packageManager, installCommand);
         }
         const targetDir = path.resolve(process.cwd(), projectName);
         // Check if the project folder already exists
