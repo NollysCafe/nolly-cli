@@ -1,5 +1,5 @@
 {
-	"name": "create-nolly",
+	"name": "nolly-cli",
 	"version": "1.0.0-release",
 	"description": "A simple CLI tool for bootstrapping projects",
 	"main": "dist/bin/index.js",
