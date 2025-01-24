@@ -1,10 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 const CACHE_FILE = path.resolve(process.env.HOME || process.env.USERPROFILE || '.', '.create-nolly-cache.json');
-const CACHE_TTL = {
-    templates: 60 * 60 * 1000, // 1 hour
-    metadata: 24 * 60 * 60 * 1000, // 24 hours
-};
 export const readCache = (key, ttl) => {
     if (fs.existsSync(CACHE_FILE)) {
         try {

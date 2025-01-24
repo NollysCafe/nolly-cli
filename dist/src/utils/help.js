@@ -14,6 +14,7 @@ ${chalk.bold('Options:')}
   ${chalk.green('new')}           Create a new project
   ${chalk.green('list')}          List all available templates
   ${chalk.green('clear-cache')}   Clear the cli cache
+  ${chalk.green('update')}        Update the CLI to the latest version
 
 ${chalk.bold('Links:')}
   ${chalk.blueBright('GitHub:')}    ${chalk.underline('https://github.com/thenolle')}

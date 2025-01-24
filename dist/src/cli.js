@@ -4,6 +4,7 @@ import { branding } from './utils/branding.js';
 import { handleNewCommand } from './commands/new.js';
 import { handleListCommand } from './commands/list.js';
 import { handleClearCacheCommand } from './commands/clearCache.js';
+import { handleUpdateCommand } from './commands/update.js';
 import chalk from 'chalk';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -14,6 +15,7 @@ const __dirname = path.dirname(__filename);
 const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../package.json'), 'utf-8'));
 export const runCLI = async (args) => {
     const { version } = packageJson;
+    process.env.VERSION = version;
     // Check for updates
     await checkForUpdates(version);
     // Check if no arguments were provided
@@ -43,6 +45,9 @@ export const runCLI = async (args) => {
             break;
         case 'clear-cache':
             handleClearCacheCommand();
+            break;
+        case 'update':
+            await handleUpdateCommand(version);
             break;
         default:
             console.error(chalk.red(`❌ Error: Invalid command "${command}".`));

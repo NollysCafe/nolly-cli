@@ -1,8 +1,8 @@
 # 🌟 Create Nolly CLI
 
 <div align="center">
-  <img src="https://img.shields.io/npm/v/create-nolly?color=brightgreen&style=flat-square" alt="Version">
-  <img src="https://img.shields.io/npm/dt/create-nolly?color=blue&style=flat-square" alt="Downloads">
+  <img src="https://img.shields.io/npm/v/nolly-cli?color=brightgreen&style=flat-square" alt="Version">
+  <img src="https://img.shields.io/npm/dt/nolly-cli?color=blue&style=flat-square" alt="Downloads">
   <img src="https://img.shields.io/github/license/thenolle/create-nolly?style=flat-square" alt="License">
   <img src="https://img.shields.io/github/stars/thenolle/create-nolly?style=social" alt="Stars">
   <img src="https://img.shields.io/github/last-commit/thenolle/create-nolly?style=flat-square" alt="Last Commit">

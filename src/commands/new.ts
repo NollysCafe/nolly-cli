@@ -3,7 +3,8 @@ import path from 'path'
 import chalk from 'chalk'
 import inquirer from 'inquirer'
 import { fileURLToPath } from 'url'
-import { readCache, writeCache } from '../utils/cache.js'
+import { readCache } from '../utils/cache.js'
+import { execSync } from 'child_process'
 
 // Fix __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url)
@@ -12,19 +13,18 @@ const __dirname = path.dirname(__filename)
 const CACHE_KEY = 'templates'
 const validTemplates = readCache(CACHE_KEY, Infinity) as { name: string }[] || [{ name: 'frontend' }, { name: 'backend' }, { name: 'fullstack' }]
 
+const validPackageManagers = ['npm', 'yarn', 'pnpm']
+
 export const handleNewCommand = async (args: string[]): Promise<void> => {
 	try {
 		// Parse project name and template type
+		let projectName = args[0]
 		const typeArgIndex = args.findIndex(arg => arg === '--type')
-		let projectName = args.find(arg => arg !== '--type' && !arg.startsWith('--'))
 		let templateType = typeArgIndex >= 0 ? args[typeArgIndex + 1] : null
-
-		// Validate the provided templateType immediately
-		if (templateType && !validTemplates.some(template => template.name === templateType)) {
-			console.error(chalk.red(`❌ Error: Invalid template type "${templateType}".`))
-			console.log(chalk.cyan(`Valid types: ${validTemplates.map(template => template.name).join(', ')}`))
-			return // Prevent further execution
-		}
+		const packageManagerIndex = args.findIndex(arg => arg === '--package-manager')
+		let packageManager = packageManagerIndex >= 0 ? args[packageManagerIndex + 1] : null
+		const noInitGit = args.findIndex(arg => arg === '--no-git') >= 0
+		const noInstall = args.findIndex(arg => arg === '--no-install') >= 0
 
 		// Interactive prompt for project name if missing
 		if (!projectName) {
@@ -36,6 +36,11 @@ export const handleNewCommand = async (args: string[]): Promise<void> => {
 			})
 			projectName = name
 		}
+		if (!/^[a-zA-Z0-9_-]+$/.test(projectName)) {
+			console.error(chalk.red(`❌ Error: Invalid project name "${projectName}".`))
+			console.log(chalk.cyan('Project name must be alphanumeric and can contain hyphens and underscores.'))
+			return
+		}
 
 		// Interactive prompt for template type if missing
 		if (!templateType) {
@@ -44,11 +49,35 @@ export const handleNewCommand = async (args: string[]): Promise<void> => {
 				name: 'template',
 				message: 'Choose a project template:',
 				choices: validTemplates.map(template => ({
-					name: `${template.name}`,
+					name: template.name,
 					value: template.name,
 				}))
 			})
 			templateType = template
+		}
+		if (!validTemplates.some(template => template.name === templateType || '')) {
+			console.error(chalk.red(`❌ Error: Invalid template type "${templateType}".`))
+			console.log(chalk.cyan(`Valid types: ${validTemplates.map(template => template.name).join(', ')}`))
+			return
+		}
+
+		// Interactive prompt for package manager if missing
+		if (!packageManager) {
+			const { manager } = await inquirer.prompt({
+				type: 'list',
+				name: 'manager',
+				message: 'Choose a package manager:',
+				choices: validPackageManagers.map(manager => ({
+					name: manager,
+					value: manager,
+				}))
+			})
+			packageManager = manager
+		}
+		if (!validPackageManagers.includes(packageManager || '')) {
+			console.error(chalk.red(`❌ Error: Invalid package manager "${packageManager}".`))
+			console.log(chalk.cyan(`Valid managers: ${validPackageManagers.join(', ')}`))
+			return
 		}
 
 		const targetDir = path.resolve(process.cwd(), projectName as string)
@@ -70,8 +99,62 @@ export const handleNewCommand = async (args: string[]): Promise<void> => {
 		fs.mkdirSync(targetDir, { recursive: true })
 		fs.cpSync(templateDir, targetDir, { recursive: true })
 
+		// Save configuration to a project-specific file
+		const configPath = path.resolve(targetDir, '.nollyrc.json')
+		const projectConfig = {
+			packageManager,
+			template: templateType,
+			createdAt: new Date().toISOString(),
+			cliVersion: process.env.VERSION
+		}
+		fs.writeFileSync(configPath, JSON.stringify(projectConfig, null, 2), 'utf-8')
+
+		// Log success message
 		console.log(chalk.green(`🎉 Project "${projectName}" created successfully with the "${templateType}" template!`))
+		console.log(chalk.cyan(`📦 Using package manager: ${packageManager}`))
 		console.log(chalk.cyan(`📂 Navigate to your project folder:\n  cd ${projectName}`))
+
+		// Interactive prompt for installing dependencies
+		if (!noInstall) {
+			const { installDependencies } = await inquirer.prompt({
+				type: 'confirm',
+				name: 'installDependencies',
+				message: 'Would you like to install dependencies now?',
+				default: true,
+			})
+			if (installDependencies) {
+				process.chdir(targetDir)
+				try {
+					console.log(chalk.cyan(`📦 Installing dependencies with ${packageManager}...`))
+					execSync(`${packageManager} install`, { cwd: targetDir, stdio: 'inherit' })
+					console.log(chalk.green('✅ Dependencies installed successfully.'))
+				} catch (error: any) {
+					console.error(chalk.red(`❌ Error: Dependencies could not be installed. ${error.message}`))
+				}
+			}
+		}
+
+		// Interactive prompt for initializing Git repository
+		if (!noInitGit) {
+			const { initializeGit } = await inquirer.prompt({
+				type: 'confirm',
+				name: 'initializeGit',
+				message: 'Would you like to initialize a Git repository?',
+				default: true,
+			})
+			if (initializeGit) {
+				process.chdir(targetDir)
+				try {
+					execSync('git init', { stdio: 'ignore' })
+					console.log(chalk.green('✅ Git repository initialized successfully.'))
+					const gitignoreContent = `# Node.js\nnode_modules\npnpm-lock.yaml\nyarn.lock\npackage-lock.json\n\n# Editor\n.vscode\n.idea\n\n# macOS\n.DS_Store\n\n# Build\nbuild\ndist\n`
+					fs.writeFileSync(path.resolve(targetDir, '.gitignore'), gitignoreContent, 'utf-8')
+					console.log(chalk.green('📄 Created a default .gitignore file.'))
+				} catch (error: any) {
+					console.error(chalk.red(`❌ Error: Git repository could not be initialized. ${error.message}`))
+				}
+			}
+		}
 	} catch (error: any) {
 		if (error.isTtyError) {
 			console.error(chalk.red('❌ Error: Prompt could not be rendered in the current environment.'))
@@ -80,6 +163,6 @@ export const handleNewCommand = async (args: string[]): Promise<void> => {
 		} else {
 			console.error(chalk.red(`❌ Unexpected error: ${error.message}`))
 		}
-		process.exit(0) // Exit gracefully
+		process.exit(0)
 	}
 }

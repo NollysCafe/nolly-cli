@@ -4,6 +4,7 @@ import { branding } from './utils/branding.js'
 import { handleNewCommand } from './commands/new.js'
 import { handleListCommand } from './commands/list.js'
 import { handleClearCacheCommand } from './commands/clearCache.js'
+import { handleUpdateCommand } from './commands/update.js'
 
 import chalk from 'chalk'
 import { fileURLToPath } from 'url'
@@ -18,6 +19,7 @@ const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../pa
 
 export const runCLI = async (args: string[]): Promise<void> => {
 	const { version } = packageJson
+	process.env.VERSION = version
 
 	// Check for updates
 	await checkForUpdates(version)
@@ -55,6 +57,10 @@ export const runCLI = async (args: string[]): Promise<void> => {
 
 		case 'clear-cache':
 			handleClearCacheCommand()
+			break
+
+		case 'update':
+			await handleUpdateCommand(version)
 			break
 
 		default:
