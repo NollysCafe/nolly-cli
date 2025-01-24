@@ -1,5 +1,5 @@
 import { checkForUpdates } from './utils/update-checker.js'
-import { displayHelp } from './utils/help.js'
+import { handleHelpCommand } from './commands/help.js'
 import { branding } from './utils/branding.js'
 import { handleNewCommand } from './commands/new.js'
 import { handleListCommand } from './commands/list.js'
@@ -38,7 +38,7 @@ export const runCLI = async (args: string[]): Promise<void> => {
 		case '--help':
 		case '-h':
 			console.log(branding())
-			displayHelp()
+			handleHelpCommand()
 			break
 
 		case '--version':

@@ -41,12 +41,16 @@ Create a new project with one command:
 create-nolly new
 ```
 
-Follow the interactive prompts to:
+Follow the interactive prompts or use optional flags to:
 1. Choose a template:
    - **Frontend** (Vite + React + TypeScript + SASS)
    - **Backend** (Express + TypeScript)
    - **Fullstack** (Frontend + Backend)
 2. Customize your project name or use the default.
+3. [Optional] Skip prompts by providing:
+   - `--package-manager <manager>`: Specify `npm`, `pnpm`, or `yarn`.
+   - `--no-git`: Skip Git initialization.
+   - `--no-install`: Skip installing dependencies.
 
 ---
 
@@ -64,7 +68,8 @@ Follow the interactive prompts to:
 - 🔒 **TypeScript**: Type-safe and maintainable backend setup.
 
 ### Fullstack
-Combines both **Frontend** and **Backend** for seamless development.
+- Combines **Frontend** and **Backend** seamlessly.
+- Preconfigured for integration between React and Express.
 
 ---
 
@@ -102,8 +107,9 @@ Visit the [Wiki](https://github.com/thenolle/create-nolly/wiki) for:
 ## ⚠️ Requirements
 
 Ensure your environment meets these requirements:
-- **Node.js** v18 or later.
-- A package manager (npm, pnpm, or yarn).
+- **Node.js** v18 or later (for compatibility and stability).
+- A package manager (`npm`, `pnpm`, or `yarn`) installed globally.
+- **Optional**: Run `create-nolly --help` for quick reference to commands.
 
 ---
 
