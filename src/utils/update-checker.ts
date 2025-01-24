@@ -48,7 +48,7 @@ export const checkForUpdates = async (currentVersion: string): Promise<void> => 
 
 			// Detect the package manager
 			const packageManager = detectPackageManager()
-			const updateCommand = packageManager === 'pnpm' ? `pnpm add -g create-nolly` : packageManager === 'yarn' ? `yarn global add create-nolly` : `npm install -g create-nolly`
+			const updateCommand = packageManager === 'pnpm' ? `pnpm add -g create-nolly` : packageManager === 'yarn' ? `yarn global add create-nolly` : `npm install -g nolly-cli`
 
 			// Prompt the user for action
 			const { shouldUpdate } = await inquirer.prompt([

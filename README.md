@@ -30,7 +30,7 @@ It offers preconfigured templates for **Frontend**, **Backend**, and **Fullstack
 Install globally via npm:
 
 ```bash
-npm install -g create-nolly
+npm install -g nolly-cli
 ```
 
 ### 🎉 Usage
