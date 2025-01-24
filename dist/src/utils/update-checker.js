@@ -32,7 +32,7 @@ const writeLastUpdateCheck = () => {
 };
 export const checkForUpdates = async (currentVersion) => {
     try {
-        // Skip the update prompt if the last check was within the interval
+        // Check if the update check interval has passed
         const lastChecked = readLastUpdateCheck();
         if (lastChecked && Date.now() - lastChecked < UPDATE_CHECK_INTERVAL_MS) {
             return;
@@ -57,17 +57,23 @@ export const checkForUpdates = async (currentVersion) => {
                 // Run the global update command
                 console.log(chalk.cyan(`🚀 Updating to version ${latest} using ${packageManager}...`));
                 execSync(updateCommand, { stdio: 'inherit' });
+                // Update the last checked timestamp after a successful update
+                writeLastUpdateCheck();
                 console.log(chalk.green(`✅ Successfully updated to version ${latest}.`));
             }
             else {
-                // Write the last checked timestamp to suppress prompts for 24 hours
+                // Update the last checked timestamp if the user skips the update
                 writeLastUpdateCheck();
                 console.log(chalk.yellow(`⚠️ Update skipped. You won't be asked again for 24 hours.`));
             }
         }
+        else {
+            // Update the last checked timestamp if no update is available
+            writeLastUpdateCheck();
+        }
     }
     catch (error) {
-        console.error(chalk.red('❌ Error checking or performing updates.'), error.message);
+        console.error(chalk.red(`❌ Error checking for updates: ${error.message}`));
     }
 };
 //# sourceMappingURL=update-checker.js.map

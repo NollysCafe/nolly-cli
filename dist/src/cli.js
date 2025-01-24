@@ -5,8 +5,15 @@ import { handleNewCommand } from './commands/new.js';
 import { handleListCommand } from './commands/list.js';
 import { handleClearCacheCommand } from './commands/clearCache.js';
 import chalk from 'chalk';
-const version = '0.1.0';
+import { fileURLToPath } from 'url';
+import path from 'path';
+import fs from 'fs';
+// Dynamically load package.json
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../package.json'), 'utf-8'));
 export const runCLI = async (args) => {
+    const { version } = packageJson;
     // Check for updates
     await checkForUpdates(version);
     // Check if no arguments were provided
