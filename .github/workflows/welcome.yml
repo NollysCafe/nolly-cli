@@ -19,11 +19,11 @@ jobs:
 
             if (isFirstDiscussion) {
               const welcomeMessage = `
-                👋 Welcome @${discussion.user.login} to the **Create Nolly CLI Community**! 🎉
+                👋 Welcome @${discussion.user.login} to the **Nolly CLI Community**! 🎉
 
                 We're excited to have you here. Here are some ways to get started:
-                - 💬 Ask questions or share ideas in the [Q&A](https://github.com/thenolle/create-nolly/discussions/categories/questions-answers).
-                - 🚀 Share your suggestions in the [Ideas](https://github.com/thenolle/create-nolly/discussions/categories/ideas-proposals).
+                - 💬 Ask questions or share ideas in the [Q&A](https://github.com/nollyscafe/nolly-cli/discussions/categories/questions-answers).
+                - 🚀 Share your suggestions in the [Ideas](https://github.com/nollyscafe/nolly-cli/discussions/categories/ideas-proposals).
                 - 🌟 Don't forget to star the repo if you find it useful!
 
                 If you need any help, feel free to ask. Happy hacking! 🚀

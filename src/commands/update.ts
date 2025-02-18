@@ -7,7 +7,7 @@ export const handleUpdateCommand = async (currentVersion: string): Promise<void>
 		await checkForUpdates(currentVersion)
 
 		// If no update was available, notify the user
-		console.log(chalk.green('✅ You already have the latest version of Create Nolly CLI'))
+		console.log(chalk.green('✅ You already have the latest version of Nolly CLI'))
 	} catch (error: any) {
 		console.error(chalk.red(`❌ Error checking for updates: ${error.message}`))
 	}

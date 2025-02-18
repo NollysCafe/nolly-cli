@@ -2,7 +2,7 @@ import chalk from 'chalk'
 
 export const handleHelpCommand = () => {
   console.log(`
-🌟 ${chalk.bold('Create Nolly CLI')}
+🌟 ${chalk.bold('Nolly CLI')}
 
 ${chalk.dim('A simple CLI tool for bootstrapping projects.')}
 
@@ -17,7 +17,7 @@ ${chalk.bold('Options:')}
   ${chalk.green('update')}             Update the CLI to the latest version
 
 ${chalk.bold('Links:')}
-  ${chalk.blueBright('GitHub:')}       ${chalk.underline('https://github.com/thenolle')}
+  ${chalk.blueBright('GitHub:')}       ${chalk.underline('https://github.com/nollyscafe/nolly-cli')}
   ${chalk.blueBright('npm:')}          ${chalk.underline('https://npmjs.com/~nolly-cafe')}
   ${chalk.blueBright('Website:')}      ${chalk.underline('https://cafe.thenolle.com')}
   ${chalk.blueBright('Discord:')}      ${chalk.underline('https://discord.gg/T9eaXaVun6')}

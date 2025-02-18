@@ -1,6 +1,6 @@
-# Contributing to Create Nolly CLI
+# Contributing to Nolly CLI
 
-Thank you for your interest in contributing to **Create Nolly CLI**! 🎉
+Thank you for your interest in contributing to **Nolly CLI**! 🎉
 While this project is primarily developed for my personal use and preferences, I'm happy to share it with the community and welcome suggestions or contributions that align with my vision.
 
 ---
@@ -23,7 +23,7 @@ To get started with the project locally:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/thenolle/create-nolly.git
+   git clone https://github.com/nollyscafe/nolly-cli.git
    cd create-nolly
    ```
 
@@ -113,6 +113,6 @@ To propose a new feature:
 ### ❤️ Thank You!
 
 Your contributions—big or small—help make this project even better.
-Thank you for being a part of the **Create Nolly CLI** community!
+Thank you for being a part of the **Nolly CLI** community!
 
-Feel free to reach out via [GitHub Issues](https://github.com/thenolle/create-nolly/issues) for questions or discussions.
+Feel free to reach out via [GitHub Issues](https://github.com/nollyscafe/nolly-cli/issues) for questions or discussions.

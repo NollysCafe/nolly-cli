@@ -46,10 +46,10 @@ export const checkForUpdates = async (currentVersion: string): Promise<void> => 
 					console.log(chalk.yellow(`⚠️ Update skipped. Please update soon to enjoy the latest features.`))
 				}
 			} else {
-				console.log(chalk.green('✅ You already have the latest version of Create Nolly CLI'))
+				console.log(chalk.green('✅ You already have the latest version of Nolly CLI'))
 			}
 		} else {
-			console.log(chalk.green('✅ You already have the latest version of Create Nolly CLI'))
+			console.log(chalk.green('✅ You already have the latest version of Nolly CLI'))
 		}
 	} catch (error: any) {
 		console.error(chalk.red(`❌ Error checking for updates: ${error.message}`))

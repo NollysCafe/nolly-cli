@@ -1,6 +1,6 @@
 ---
 name: 🚀 Feature Request
-about: Suggest a new feature for Create Nolly CLI
+about: Suggest a new feature for Nolly CLI
 title: "[FEATURE] <Feature Title>"
 labels: enhancement
 assignees: thenolle

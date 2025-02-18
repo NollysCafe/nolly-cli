@@ -42,7 +42,7 @@ export const runCLI = async (args: string[]): Promise<void> => {
 
 		case '--version':
 		case '-v':
-			console.log(chalk.bold(`🌟 Create Nolly CLI`))
+			console.log(chalk.bold(`🌟 Nolly CLI`))
 			console.log(chalk.green(`Version: ${version}`))
 			break
 

@@ -1,6 +1,6 @@
 ---
 name: ❓ General Question
-about: Ask a question about Create Nolly CLI
+about: Ask a question about Nolly CLI
 title: "[QUESTION] <Short Question>"
 labels: question
 assignees: thenolle

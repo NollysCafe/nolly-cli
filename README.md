@@ -1,21 +1,21 @@
-# 🌟 Create Nolly CLI
+# 🌟 Nolly CLI
 
 <div align="center">
   <img src="https://img.shields.io/npm/v/nolly-cli?color=brightgreen&style=flat-square" alt="Version">
   <img src="https://img.shields.io/npm/dt/nolly-cli?color=blue&style=flat-square" alt="Downloads">
-  <img src="https://img.shields.io/github/license/thenolle/create-nolly?style=flat-square" alt="License">
-  <img src="https://img.shields.io/github/stars/thenolle/create-nolly?style=social" alt="Stars">
-  <img src="https://img.shields.io/github/last-commit/thenolle/create-nolly?style=flat-square" alt="Last Commit">
+  <img src="https://img.shields.io/github/license/nollyscafe/nolly-cli?style=flat-square" alt="License">
+  <img src="https://img.shields.io/github/stars/nollyscafe/nolly-cli?style=social" alt="Stars">
+  <img src="https://img.shields.io/github/last-commit/nollyscafe/nolly-cli?style=flat-square" alt="Last Commit">
 </div>
 
-**Create Nolly CLI** is a modern toolkit for bootstrapping web projects with minimal effort. 🚀
-It offers preconfigured templates for **Frontend**, **Backend**, and **Fullstack** projects to help you focus on building, not configuring.
+**Nolly CLI** is a modern toolkit for bootstrapping web projects with minimal effort. 🚀
+It offers preconfigured templates for **Frontend**, **Backend**, **Fullstack**, and **Discord Bots** projects to help you focus on building, not configuring.
 
 ---
 
 ## ✨ Features
 
-- 🛠️ **Ready-to-Use Templates**: Vite + React, Express, or both!
+- 🛠️ **Ready-to-Use Templates**: Vite + React, Express, Fullstack, and Discord Bot!
 - ⚡ **Quick Setup**: Organized and production-ready project structures.
 - 🌈 **Developer-Friendly CLI**: Interactive prompts, rich visuals, and helpful outputs.
 - 📦 **Supports npm, pnpm, or yarn**.
@@ -46,6 +46,7 @@ Follow the interactive prompts or use optional flags to:
    - **Frontend** (Vite + React + TypeScript + SASS)
    - **Backend** (Express + TypeScript)
    - **Fullstack** (Frontend + Backend)
+   - **Discord Bot** (Discord.js + TypeScript)
 2. Customize your project name or use the default.
 3. [Optional] Skip prompts by providing:
    - `--package-manager <manager>`: Specify `npm`, `pnpm`, or `yarn`.
@@ -71,11 +72,18 @@ Follow the interactive prompts or use optional flags to:
 - Combines **Frontend** and **Backend** seamlessly.
 - Preconfigured for integration between React and Express.
 
+### Discord Bot
+- 🤖 **Discord.js v14**: Latest API support.
+- 📂 **Modular Structure**: Organized commands, events, and handlers.
+- 🚀 **TypeScript Support**: Fully typed for maintainability.
+- 🐳 **Docker & Docker Compose**: Ready for containerized deployment.
+- 🔧 **Hot Reloading**: Powered by `ts-node-dev` for a smooth dev experience.
+
 ---
 
 ## 📚 Learn More
 
-Visit the [Wiki](https://github.com/thenolle/create-nolly/wiki) for:
+Visit the [Wiki](https://github.com/nollyscafe/nolly-cli/wiki) for:
 - Full tutorials for each template.
 - Deployment guides.
 - Advanced CLI usage.
@@ -102,6 +110,24 @@ Visit the [Wiki](https://github.com/thenolle/create-nolly/wiki) for:
 3. Start the server: npm run dev
 ```
 
+### Fullstack Project
+```plaintext
+🎉 Project 'my-fullstack' created successfully!
+📦 Next steps:
+1. Navigate to your project folder: cd my-fullstack
+2. Install dependencies: npm -w install
+3. Start the server: npm run dev
+```
+
+### Discord Bot Project
+```plaintext
+🎉 Project 'my-discord-bot' created successfully!
+📦 Next steps:
+1. Navigate to your project folder: cd my-discord-bot
+2. Install dependencies: npm install
+3. Start the bot: npm run dev
+```
+
 ---
 
 ## ⚠️ Requirements
@@ -116,7 +142,7 @@ Ensure your environment meets these requirements:
 ## 💬 Support
 
 Need help or have feedback?
-- Open an [issue](https://github.com/thenolle/create-nolly/issues).
+- Open an [issue](https://github.com/nollyscafe/nolly-cli/issues).
 - Join our [Discord community](https://discord.gg/T9eaXaVun6).
 
 ---
@@ -124,8 +150,8 @@ Need help or have feedback?
 ## ❤️ Contributors
 
 A big thanks to all contributors!
-<a href="https://github.com/thenolle/create-nolly/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=thenolle/create-nolly" />
+<a href="https://github.com/nollyscafe/nolly-cli/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=nollyscafe/nolly-cli" />
 </a>
 
 ---
