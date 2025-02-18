@@ -5,6 +5,7 @@ const templates = [
 	{ name: 'frontend', description: 'Frontend (Vite + React + TypeScript + SASS)', color: chalk.cyan, icon: '⚡' },
 	{ name: 'backend', description: 'Backend (Express + TypeScript)', color: chalk.green, icon: '🚀' },
 	{ name: 'fullstack', description: 'Fullstack (Frontend + Backend)', color: chalk.magenta, icon: '🌈' },
+	{ name: 'discord-bot', description: 'Discord Bot (Discord.js + TypeScript)', color: chalk.blue, icon: '🤖' },
 ]
 
 export const getTemplates = (): typeof templates => {

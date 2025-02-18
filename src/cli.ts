@@ -1,4 +1,3 @@
-import { checkForUpdates } from './utils/update-checker.js'
 import { handleHelpCommand } from './commands/help.js'
 import { branding } from './utils/branding.js'
 import { handleNewCommand } from './commands/new.js'
@@ -19,9 +18,6 @@ const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../pa
 export const runCLI = async (args: string[]): Promise<void> => {
 	const { version } = packageJson
 	process.env.VERSION = version
-
-	// Check for updates
-	await checkForUpdates(version)
 
 	// Check if no arguments were provided
 	if (args.length === 0) {
