@@ -1,6 +1,6 @@
 {
 	"name": "nolly-cli",
-	"version": "1.0.5",
+	"version": "1.0.4-r",
 	"description": "A simple CLI tool for bootstrapping projects",
 	"main": "dist/bin/index.js",
 	"type": "module",
