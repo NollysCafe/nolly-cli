@@ -10,7 +10,7 @@ import { platform } from 'os'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const validTemplates = [{ name: 'frontend' }, { name: 'backend' }, { name: 'fullstack' }]
+const validTemplates = [{ name: 'frontend' }, { name: 'backend' }, { name: 'fullstack' }, { name: 'discord-bot' }]
 const validPackageManagers = ['npm', 'yarn', 'pnpm']
 
 const isCommandAvailable = (command: string): boolean => {
@@ -158,11 +158,6 @@ export const handleNewCommand = async (args: string[]): Promise<void> => {
 		}
 		fs.writeFileSync(configPath, JSON.stringify(projectConfig, null, 2), 'utf-8')
 
-		// Log success message
-		console.log(chalk.green(`🎉 Project "${projectName}" created successfully with the "${templateType}" template!`))
-		console.log(chalk.cyan(`📦 Using package manager: ${packageManager}`))
-		console.log(chalk.cyan(`📂 Navigate to your project folder:\n  cd ${projectName}`))
-
 		// Interactive prompt for installing dependencies
 		if (!noInstall) {
 			const { installDependencies } = await inquirer.prompt({
@@ -204,6 +199,11 @@ export const handleNewCommand = async (args: string[]): Promise<void> => {
 				}
 			}
 		}
+
+		// Log success message
+		console.log(chalk.green(`🎉 Project "${projectName}" created successfully with the "${templateType}" template!`))
+		console.log(chalk.cyan(`📦 Using package manager: ${packageManager}`))
+		console.log(chalk.cyan(`📂 Navigate to your project folder:\n  cd ${projectName}`))
 	} catch (error: any) {
 		if (error.isTtyError) {
 			console.error(chalk.red('❌ Error: Prompt could not be rendered in the current environment.'))

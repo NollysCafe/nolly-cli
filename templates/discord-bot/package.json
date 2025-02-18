@@ -1,0 +1,23 @@
+{
+  "name": "discord-bot",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "watch": "ts-node-dev --respawn --transpile-only src/index.ts"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "discord.js": "^14.18.0",
+    "fs-extra": "^11.3.0",
+    "table": "^6.9.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.13.4",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.3"
+  }
+}
